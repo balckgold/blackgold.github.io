@@ -58,15 +58,13 @@
         <header id="header">
     <div id="header-main" class="header-inner">
         <div class="outer">
-            <a href="/main" id="logo">
+            <a href="/" id="logo">
                 <i class="logo"></i>
                 <span class="site-title">LIIHAG</span>
             </a>
             <nav id="main-nav">
                 
-                    <a class="main-nav-link" href="/main">首页</a>
-                
-                    <a class="main-nav-link" href="/categories">教程</a>
+                    <a class="main-nav-link" href="/">首页</a>
                 
                     <a class="main-nav-link" href="/about">关于</a>
                 
@@ -96,7 +94,7 @@
         TRANSLATION: {
             POSTS: '文章',
             PAGES: '页面',
-            CATEGORIES: '教程',
+            CATEGORIES: '导航',
             TAGS: '标签',
             UNTITLED: '(未命名)',
         },
@@ -115,9 +113,7 @@
         <table class="menu outer">
             <tr>
                 
-                    <td><a class="main-nav-link" href="/main">首页</a></td>
-                
-                    <td><a class="main-nav-link" href="/categories">教程</a></td>
+                    <td><a class="main-nav-link" href="/">首页</a></td>
                 
                     <td><a class="main-nav-link" href="/about">关于</a></td>
                 
@@ -141,25 +137,34 @@
         
     <div class="widget-wrap" id="categories">
         <h3 class="widget-title">
-            <span>教程</span>
+            <span>导航</span>
             &nbsp;
             <a id="allExpand" href="#">
-                <i class="fa fa-angle-double-down fa-2x"></i>
+                <i class="fa fa-angle-double-up fa-2x"></i>
             </a>
         </h3>
         
         
         
-         <ul class="unstyled" id="tree"> 
+         <ul class="unstyled" id="tree" style="display: block;"> 
                     <li class="directory">
                         <a href="#" data-role="directory">
-                            <i class="fa fa-folder"></i>
+                            <i class="fa fa-folder-open"></i>
                             &nbsp;
-                            testCat
+                            首页
                         </a>
-                         <ul class="unstyled" id="tree">  <li class="file"><a href="/wiki/hello-world/">Hello World</a></li>  </ul> 
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            test
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/技术开发/3333/">欢迎来到我的博客小站</a></li>  </ul> 
                     </li> 
                      </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/HOST/">欢迎来到我的博客小站</a></li>  </ul> 
     </div>
     <script>
         $(document).ready(function() {
@@ -231,7 +236,7 @@
 </aside>
             
             <section id="main">
-        <article id="post-hello-world" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <article id="post-HOST" class="article article-type-post" itemscope="" itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -239,22 +244,12 @@
                 
                     <div class="article-meta">
                         
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/testCat/">testCat</a>
-    </div>
-
                         
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/testTags/">testTags</a>
-    </div>
-
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/wiki/hello-world/">
-            <time datetime="2018-11-15T04:55:07.244Z" itemprop="datePublished">2018-11-15</time>
+        <a href="/wiki/HOST/">
+            <time datetime="2018-11-16T02:08:44.000Z" itemprop="datePublished">2018-11-16</time>
         </a>
     </div>
 
@@ -268,8 +263,8 @@
                 
                 
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/wiki/hello-world/">Hello World</a>
+        <h1 class="article-title" itemprop="name">
+            欢迎来到我的博客小站
         </h1>
     
 
@@ -280,38 +275,15 @@
         
         
             
-                
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                    
-                    
-                
-                
-                    
-                    <p></p><p>Welcome to <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" rel="external nofollow noopener noreferrer" target="_blank">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" rel="external nofollow noopener noreferrer" target="_blank">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" rel="external nofollow noopener noreferrer" target="_blank">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" rel="external nofollow noopener noreferrer" target="_blank">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" rel="external nofollow noopener noreferrer" target="_blank">Server</a></p>
-<p>
-                
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#欢迎来到我的博客小站"><span class="toc-number">1.</span> <span class="toc-text">欢迎来到我的博客小站</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#由于本人采用为知笔记来管理知识，因此博客会较少更新"><span class="toc-number">1.1.</span> <span class="toc-text">由于本人采用为知笔记来管理知识，因此博客会较少更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#此博客由HEXO构建，采用的是Wikitten主题"><span class="toc-number">1.2.</span> <span class="toc-text">此博客由HEXO构建，采用的是Wikitten主题</span></a></li></ol></li></ol>
+                </div>
             
         
         
-            </p></div>   
-            <div class="article-more-link">
-                <a href="/wiki/hello-world/#more">查看更多</a>
+            <p>测试</p>
+<h2 id="欢迎来到我的博客小站"><a href="#欢迎来到我的博客小站" class="headerlink" title="欢迎来到我的博客小站"></a>欢迎来到我的博客小站</h2><h3 id="由于本人采用为知笔记来管理知识，因此博客会较少更新"><a href="#由于本人采用为知笔记来管理知识，因此博客会较少更新" class="headerlink" title="由于本人采用为知笔记来管理知识，因此博客会较少更新"></a>由于本人采用为知笔记来管理知识，因此博客会较少更新</h3><h3 id="此博客由HEXO构建，采用的是Wikitten主题"><a href="#此博客由HEXO构建，采用的是Wikitten主题" class="headerlink" title="此博客由HEXO构建，采用的是Wikitten主题"></a>此博客由<a href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">HEXO</a>构建，采用的是<a href="https://github.com/zthxxx/hexo-theme-Wikitten" rel="external nofollow noopener noreferrer" target="_blank">Wikitten</a>主题</h3>
             </div>
         
         <footer class="article-footer">
@@ -320,11 +292,33 @@
 </article>
 
 
+    
+<nav id="article-nav">
+    
+    
+        <a href="/wiki/技术开发/3333/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">欢迎来到我的博客小站</div>
+        </a>
+    
+</nav>
+
 
 
 
 
     
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+
+
 </section>
         </div>
         <footer id="footer">

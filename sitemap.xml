@@ -2,9 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>liihag.github.io/wiki/hello-world/</loc>
+    <loc>liihag.github.io/wiki/HOST/</loc>
     
-    <lastmod>2018-11-15T08:11:29.877Z</lastmod>
+    <lastmod>2018-11-16T06:55:54.946Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>liihag.github.io/wiki/%E6%8A%80%E6%9C%AF%E5%BC%80%E5%8F%91/3333/</loc>
+    
+    <lastmod>2018-11-16T06:54:43.659Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>liihag.github.io/index.html</loc>
+    
+    <lastmod>2018-11-16T03:59:57.232Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>liihag.github.io/%E9%A6%96%E9%A1%B5/HOST.html</loc>
+    
+    <lastmod>2018-11-16T03:53:15.423Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>liihag.github.io/%E9%A6%96%E9%A1%B5/test2/test.html</loc>
+    
+    <lastmod>2018-11-16T02:47:40.491Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>liihag.github.io/tutorial/index.html</loc>
+    
+    <lastmod>2018-11-16T02:17:25.828Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>liihag.github.io/tutorial/HOST.html</loc>
+    
+    <lastmod>2018-11-16T02:17:25.828Z</lastmod>
     
   </url>
   

@@ -59,15 +59,13 @@
         <header id="header">
     <div id="header-main" class="header-inner">
         <div class="outer">
-            <a href="/main" id="logo">
+            <a href="/" id="logo">
                 <i class="logo"></i>
                 <span class="site-title">LIIHAG</span>
             </a>
             <nav id="main-nav">
                 
-                    <a class="main-nav-link" href="/main">首页</a>
-                
-                    <a class="main-nav-link" href="/categories">教程</a>
+                    <a class="main-nav-link" href="/">首页</a>
                 
                     <a class="main-nav-link" href="/about">关于</a>
                 
@@ -97,7 +95,7 @@
         TRANSLATION: {
             POSTS: '文章',
             PAGES: '页面',
-            CATEGORIES: '教程',
+            CATEGORIES: '导航',
             TAGS: '标签',
             UNTITLED: '(未命名)',
         },
@@ -116,9 +114,7 @@
         <table class="menu outer">
             <tr>
                 
-                    <td><a class="main-nav-link" href="/main">首页</a></td>
-                
-                    <td><a class="main-nav-link" href="/categories">教程</a></td>
+                    <td><a class="main-nav-link" href="/">首页</a></td>
                 
                     <td><a class="main-nav-link" href="/about">关于</a></td>
                 
@@ -142,25 +138,34 @@
         
     <div class="widget-wrap" id="categories">
         <h3 class="widget-title">
-            <span>教程</span>
+            <span>导航</span>
             &nbsp;
             <a id="allExpand" href="#">
-                <i class="fa fa-angle-double-down fa-2x"></i>
+                <i class="fa fa-angle-double-up fa-2x"></i>
             </a>
         </h3>
         
         
         
-         <ul class="unstyled" id="tree"> 
+         <ul class="unstyled" id="tree" style="display: block;"> 
                     <li class="directory">
                         <a href="#" data-role="directory">
-                            <i class="fa fa-folder"></i>
+                            <i class="fa fa-folder-open"></i>
                             &nbsp;
-                            testCat
+                            首页
                         </a>
-                         <ul class="unstyled" id="tree">  <li class="file"><a href="/wiki/hello-world/">Hello World</a></li>  </ul> 
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            test
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/技术开发/3333/">欢迎来到我的博客小站</a></li>  </ul> 
                     </li> 
                      </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/HOST/">欢迎来到我的博客小站</a></li>  </ul> 
     </div>
     <script>
         $(document).ready(function() {
@@ -236,8 +241,6 @@
         <span>Tags</span>
     </div>
     <div class="layout-wrap-inner tag-cloud">
-        
-            <a href="/tags/testTags/" style="font-size: 14px;">testTags</a>
         
     </div>
 </section></section>
