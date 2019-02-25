@@ -5,168 +5,60 @@
   <subtitle>liihag</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="liihag.github.io/"/>
-  <updated>2019-02-23T10:03:18.430Z</updated>
-  <id>liihag.github.io/</id>
+  <link href="/"/>
+  <updated>2019-02-25T07:46:20.056Z</updated>
+  <id>/</id>
   
   <author>
-    <name>blackgold</name>
+    <name>yly</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>这是categories的首页的index.的titile</title>
-    <link href="liihag.github.io/wiki/categories/%E9%A6%96%E9%A1%B5/index/"/>
-    <id>liihag.github.io/wiki/categories/首页/index/</id>
-    <published>2019-02-23T10:48:41.907Z</published>
-    <updated>2019-02-23T10:03:18.430Z</updated>
-    
-    <content type="html"><![CDATA[<p>这是categories的首页的index.md</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这是categories的首页的index.md&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="categories" scheme="liihag.github.io/categories/categories/"/>
-    
-      <category term="首页" scheme="liihag.github.io/categories/categories/%E9%A6%96%E9%A1%B5/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Tags</title>
-    <link href="liihag.github.io/wiki/categories/testtag/index/"/>
-    <id>liihag.github.io/wiki/categories/testtag/index/</id>
-    <published>2019-02-23T10:48:41.905Z</published>
-    <updated>2019-02-23T10:46:51.167Z</updated>
-    
-    <content type="html"><![CDATA[<p>fff</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;fff&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="categories" scheme="liihag.github.io/categories/categories/"/>
-    
-      <category term="testtag" scheme="liihag.github.io/categories/categories/testtag/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>这是categories的test的index.的titile</title>
-    <link href="liihag.github.io/wiki/categories/test/index/"/>
-    <id>liihag.github.io/wiki/categories/test/index/</id>
-    <published>2019-02-23T10:48:41.902Z</published>
-    <updated>2019-02-23T10:03:30.957Z</updated>
-    
-    <content type="html"><![CDATA[<p>这是categories的test的index.md</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这是categories的test的index.md&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="categories" scheme="liihag.github.io/categories/categories/"/>
-    
-      <category term="test" scheme="liihag.github.io/categories/categories/test/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Tags</title>
-    <link href="liihag.github.io/wiki/categories/index/"/>
-    <id>liihag.github.io/wiki/categories/index/</id>
-    <published>2019-02-23T10:48:41.900Z</published>
-    <updated>2019-02-23T10:46:33.179Z</updated>
-    
-    <content type="html"><![CDATA[<p>ags的index的内容</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;ags的index的内容&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="categories" scheme="liihag.github.io/categories/categories/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>欢迎来到我的博客小站</title>
-    <link href="liihag.github.io/wiki/HOST/"/>
-    <id>liihag.github.io/wiki/HOST/</id>
+    <title>hexo相关常用操作</title>
+    <link href="/wiki/3333/"/>
+    <id>/wiki/3333/</id>
     <published>2018-11-16T02:08:44.000Z</published>
-    <updated>2019-02-23T09:36:45.788Z</updated>
+    <updated>2019-02-25T07:46:20.056Z</updated>
     
-    <content type="html"><![CDATA[<p>测试</p><h2 id="欢迎来到我的博客小站post-host-md"><a href="#欢迎来到我的博客小站post-host-md" class="headerlink" title="欢迎来到我的博客小站post host.md"></a>欢迎来到我的博客小站post host.md</h2><p>这是首页</p><h3 id="由于本人采用为知笔记来管理知识，因此博客会较少更新"><a href="#由于本人采用为知笔记来管理知识，因此博客会较少更新" class="headerlink" title="由于本人采用为知笔记来管理知识，因此博客会较少更新"></a>由于本人采用为知笔记来管理知识，因此博客会较少更新</h3><h3 id="此博客由HEXO构建，采用的是Wikitten主题"><a href="#此博客由HEXO构建，采用的是Wikitten主题" class="headerlink" title="此博客由HEXO构建，采用的是Wikitten主题"></a>此博客由<a href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">HEXO</a>构建，采用的是<a href="https://github.com/zthxxx/hexo-theme-Wikitten" rel="external nofollow noopener noreferrer" target="_blank">Wikitten</a>主题</h3>]]></content>
+    <content type="html"><![CDATA[<h2 id="欢迎来到我的博客小站"><a href="#欢迎来到我的博客小站" class="headerlink" title="欢迎来到我的博客小站"></a><center><strong>欢迎来到我的博客小站</strong></center></h2><h3 id="由于本人采用为知笔记来管理知识，因此博客会较少更新"><a href="#由于本人采用为知笔记来管理知识，因此博客会较少更新" class="headerlink" title="由于本人采用为知笔记来管理知识，因此博客会较少更新"></a>由于本人采用为知笔记来管理知识，因此博客会较少更新</h3>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;测试&lt;/p&gt;
-&lt;h2 id=&quot;欢迎来到我的博客小站post-host-md&quot;&gt;&lt;a href=&quot;#欢迎来到我的博客小站post-host-md&quot; class=&quot;headerlink&quot; title=&quot;欢迎来到我的博客小站post host.md&quot;&gt;&lt;/a&gt;欢迎来到我的博客小站
+        &lt;h2 id=&quot;欢迎来到我的博客小站&quot;&gt;&lt;a href=&quot;#欢迎来到我的博客小站&quot; class=&quot;headerlink&quot; title=&quot;欢迎来到我的博客小站&quot;&gt;&lt;/a&gt;&lt;center&gt;&lt;strong&gt;欢迎来到我的博客小站&lt;/strong&gt;&lt;/center&gt;&lt;/h2&gt;&lt;h3 id=
       
     
     </summary>
     
-      <category term="test" scheme="liihag.github.io/categories/test/"/>
+      <category term="备忘" scheme="/categories/%E5%A4%87%E5%BF%98/"/>
     
+    
+      <category term="hexo" scheme="/tags/hexo/"/>
     
   </entry>
   
   <entry>
-    <title>文章</title>
-    <link href="liihag.github.io/wiki/test/3333/"/>
-    <id>liihag.github.io/wiki/test/3333/</id>
+    <title></title>
+    <link href="/wiki/%E9%A6%96%E9%A1%B5/"/>
+    <id>/wiki/首页/</id>
     <published>2018-11-16T02:08:44.000Z</published>
-    <updated>2019-02-23T10:26:49.667Z</updated>
+    <updated>2019-02-25T06:49:00.089Z</updated>
     
-    <content type="html"><![CDATA[<p>测试</p><h2 id="欢迎来到我的博客小站"><a href="#欢迎来到我的博客小站" class="headerlink" title="欢迎来到我的博客小站"></a>欢迎来到我的博客小站</h2><h3 id="由于本人采用为知笔记来管理知识，因此博客会较少更新"><a href="#由于本人采用为知笔记来管理知识，因此博客会较少更新" class="headerlink" title="由于本人采用为知笔记来管理知识，因此博客会较少更新"></a>由于本人采用为知笔记来管理知识，因此博客会较少更新</h3><h3 id="此博客由HEXO构建，采用的是Wikitten主题"><a href="#此博客由HEXO构建，采用的是Wikitten主题" class="headerlink" title="此博客由HEXO构建，采用的是Wikitten主题"></a>此博客由<a href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">HEXO</a>构建，采用的是<a href="https://github.com/zthxxx/hexo-theme-Wikitten" rel="external nofollow noopener noreferrer" target="_blank">Wikitten</a>主题</h3>]]></content>
+    <content type="html"><![CDATA[<h3 id="由于本人采用为知笔记来管理知识，因此博客会较少更新"><a href="#由于本人采用为知笔记来管理知识，因此博客会较少更新" class="headerlink" title="由于本人采用为知笔记来管理知识，因此博客会较少更新"></a>由于本人采用为知笔记来管理知识，因此博客会较少更新</h3>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;测试&lt;/p&gt;
-&lt;h2 id=&quot;欢迎来到我的博客小站&quot;&gt;&lt;a href=&quot;#欢迎来到我的博客小站&quot; class=&quot;headerlink&quot; title=&quot;欢迎来到我的博客小站&quot;&gt;&lt;/a&gt;欢迎来到我的博客小站&lt;/h2&gt;&lt;h3 id=&quot;由于本人采用为知笔记来管理知识，因此博客会较少
+        &lt;h3 id=&quot;由于本人采用为知笔记来管理知识，因此博客会较少更新&quot;&gt;&lt;a href=&quot;#由于本人采用为知笔记来管理知识，因此博客会较少更新&quot; class=&quot;headerlink&quot; title=&quot;由于本人采用为知笔记来管理知识，因此博客会较少更新&quot;&gt;&lt;/a&gt;由于本人采用为知笔记来
       
     
     </summary>
     
-      <category term="首页" scheme="liihag.github.io/categories/%E9%A6%96%E9%A1%B5/"/>
-    
-      <category term="test2" scheme="liihag.github.io/categories/%E9%A6%96%E9%A1%B5/test2/"/>
-    
-    
-      <category term="testtag" scheme="liihag.github.io/tags/testtag/"/>
     
   </entry>
   
