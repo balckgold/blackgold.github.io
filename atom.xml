@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2019-02-25T09:04:23.603Z</updated>
+  <updated>2019-02-25T12:07:23.436Z</updated>
   <id>/</id>
   
   <author>
@@ -17,27 +17,31 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>hexo相关常用操作</title>
-    <link href="/wiki/hexo%E7%9B%B8%E5%85%B3%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
-    <id>/wiki/hexo相关常用操作/</id>
-    <published>2018-11-16T02:08:44.000Z</published>
-    <updated>2019-02-25T09:04:23.603Z</updated>
+    <title>RK3399 Android 音频驱动总结</title>
+    <link href="/wiki/Android/%E9%A9%B1%E5%8A%A8/Rk3399%20Android%E9%9F%B3%E9%A2%91%E9%A9%B1%E5%8A%A8%E6%80%BB%E7%BB%93/"/>
+    <id>/wiki/Android/驱动/Rk3399 Android音频驱动总结/</id>
+    <published>2019-02-25T12:07:44.000Z</published>
+    <updated>2019-02-25T12:07:23.436Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h1><h5 id="hexo-生成页面"><a href="#hexo-生成页面" class="headerlink" title="hexo 生成页面"></a>hexo 生成页面</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure><h5 id="启动hexo本地服务器"><a href="#启动hexo本地服务器" class="headerlink" title="启动hexo本地服务器"></a>启动hexo本地服务器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure><h5 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure><h1 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h1><p>1.在我采用的这个主题中，<strong>categories需要理解为导航</strong>。</p><p>2.网页上面的菜单栏（主页、关于），对应的是config.yml中的menu。实际上点击主页会显示所有主页目录下的所有文章，而我故意将主页目录下<u><strong>只放一个</strong></u>index.md，所以看上去主页就是一个页面。</p><p>3.关于首页，网页首页的配置在主题的config.yml中</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_index_file: 首页.md # if this, it will display at site index instead of default index page</span><br></pre></td></tr></table></figure><p>   需要注意的是，这里的首页和导航栏上面的首页不一样。但我部署时会故意将这个和导航栏的那个首页同步。这样的显示更友好</p><p>4.一篇文章可以有多个tag，如下此文章就可以同时有两个tag了：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tags：</span><br><span class="line">- hexo</span><br><span class="line">- blog</span><br></pre></td></tr></table></figure><p>5.注意categories是分层级的，如下实际的显示是在导航栏里分了两层。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">categories: </span><br><span class="line">- 2019</span><br><span class="line">- 01</span><br></pre></td></tr></table></figure><p>6.每篇文章的头部配置中，toc: true 就会出现一个全局的目录</p><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p>1.<a href="https://github.com/zthxxx/hexo-theme-Wikitten/blob/master/README_zh-CN.md#Configuration" rel="external nofollow noopener noreferrer" target="_blank">hexo-theme-Wikitten 主题</a></p><p>2.<a href="https://hexo.io/zh-cn/docs/deployment" rel="external nofollow noopener noreferrer" target="_blank">hexo官方文档</a></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="整体音频驱动框架"><a href="#整体音频驱动框架" class="headerlink" title="整体音频驱动框架"></a>整体音频驱动框架</h1><p>音频硬件设备驱动，由三大部分组成，分别是 <strong>Machine、Platform、Code</strong></p><p><img src="/Rk3399 Android音频驱动总结-1.png" alt=""></p><p><strong>snd_card</strong>： snd_card可以说是整个ALSA音频驱动最顶层的一个结构，整个声卡的软件逻辑结构开始于该结构，几乎所有与声音相关的逻辑设备都是在snd_card的管理之下，声卡驱动的第一个动作通常就是创建一个snd_card结构体。</p><p>Machine驱动中通常会注册snd_card。Machine中会绑定Platform和codec</p><p>Platform驱动通常对应的是CPU端的I2S操作。</p><p>Codec驱动通常对应的是单独的codec，Codec驱动与平台无关。</p><p>一次音频设置的大体流程为： 设置machine–》machine分别设置Platform和Codec </p><p>Dai的概念：Platform驱动和Codec驱动，通常通过Dai Driver来和Machine通信。</p><h2 id="Machine驱动"><a href="#Machine驱动" class="headerlink" title="Machine驱动"></a>Machine驱动</h2><p>一般来说Machine对应的是一个linux platform 设备。</p><p>Machine驱动中会初始化一个snd_card结构体，snd_card结构体中有个关键的snd_soc_dai_link。snd_soc_dai_link就是用来绑定codec和Platform使用的。</p><p>在初始化snd_card后，Machine会通过snd_soc_register_card来注册一个声卡设备（snd_card）。</p><h2 id="Platform驱动"><a href="#Platform驱动" class="headerlink" title="Platform驱动"></a>Platform驱动</h2><p>Platform驱动通常对应CPU端的I2S或其他音频格式接口。也就是用来设置CPU内部操作的，可能会涉及到相关的dma操作。</p><p>snd_soc_dai_driver：</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">struct snd_soc_dai_driver &#123;</span><br><span class="line"><span class="comment">/* DAI description */</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *name;<span class="comment">//ALOS就是通过这name来绑定machine中的dailink，</span></span><br><span class="line">unsigned <span class="keyword">int</span> id;</span><br><span class="line">unsigned <span class="keyword">int</span> base;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* DAI driver callbacks */</span></span><br><span class="line"><span class="keyword">int</span> (*probe)(struct snd_soc_dai *dai);<span class="comment">//初次绑定dai时执行的操作</span></span><br><span class="line"><span class="keyword">int</span> (*remove)(struct snd_soc_dai *dai);</span><br><span class="line"><span class="keyword">int</span> (*suspend)(struct snd_soc_dai *dai);</span><br><span class="line"><span class="keyword">int</span> (*resume)(struct snd_soc_dai *dai);</span><br><span class="line"><span class="comment">/* compress dai */</span></span><br><span class="line"><span class="keyword">int</span> (*compress_new)(struct snd_soc_pcm_runtime *rtd, <span class="keyword">int</span> num);</span><br><span class="line"><span class="comment">/* DAI is also used for the control bus */</span></span><br><span class="line">bool bus_control;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* ops */</span></span><br><span class="line"><span class="keyword">const</span> struct snd_soc_dai_ops *ops;<span class="comment">//实际上主要的相关操作：设置时钟，波特率等</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* DAI capabilities */</span></span><br><span class="line">struct snd_soc_pcm_stream capture;<span class="comment">//实际的capture流的能力，如果不设此值，表示没有capture的pcm节点</span></span><br><span class="line">struct snd_soc_pcm_stream playback<span class="comment">//实际的palyback流的能力，如果不设此值，表示没有capture的pcm节点</span></span><br><span class="line">unsigned <span class="keyword">int</span> symmetric_rates:<span class="number">1</span>;</span><br><span class="line">unsigned <span class="keyword">int</span> symmetric_channels:<span class="number">1</span>;</span><br><span class="line">unsigned <span class="keyword">int</span> symmetric_samplebits:<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* probe ordering - for components with runtime dependencies */</span></span><br><span class="line"><span class="keyword">int</span> probe_order;</span><br><span class="line"><span class="keyword">int</span> remove_order;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>machine 通过snd_soc_add_platform来注册snd_soc_dai_driver</p><h2 id="CODEC驱动"><a href="#CODEC驱动" class="headerlink" title="CODEC驱动"></a>CODEC驱动</h2><p>codec驱动同样需要实例化上面说的snd_soc_dai_driver来与machine联系，同时还要注册一个snd_soc_codec_driver驱动来实现codec自身的相关操作。</p><p>snd_soc_dai_driver和snd_soc_codec_driver通过snd_soc_register_codec来注册绑定。</p><h1 id="RK3399的音频驱动"><a href="#RK3399的音频驱动" class="headerlink" title="RK3399的音频驱动"></a>RK3399的音频驱动</h1><h2 id="Machine驱动：simple-card"><a href="#Machine驱动：simple-card" class="headerlink" title="Machine驱动：simple_card"></a>Machine驱动：simple_card</h2><p>Rk3399比较推荐使用simple card来充当machine的角色。对应驱动文件路径：\sound\soc\generic\simple-card.c。</p><p>simple-card的相关dts配置可以参考内核文档，需要注意的是：</p><p>1.在CPU或codec的子节点中，如果指定了clock设备，那么该在子节点被启动或停用时此clock会自动被使能或失能。无需额外操作。这个clock通常是用于给外设提供mclk，所以通常挂载codec的节点下。</p><p>2.<strong>默认是CPU为I2S主设备</strong>，除非指定了bitclock-master和frame-master</p><p>3.默认只有一个dailink，如果只有一个dailink，则需要在每个属性或节点前添加simple-audio-card,前缀。多个dailink则不能添加</p><p>4.simple card同样支持tdm格式</p><h2 id="Platform驱动：-rockchip-i2s"><a href="#Platform驱动：-rockchip-i2s" class="headerlink" title="Platform驱动： rockchip_i2s"></a>Platform驱动： rockchip_i2s</h2><p>实际上在rockchip i2s驱动中，是通过devm_snd_soc_register_component封装的snd_soc_add_platform</p><p>此外，还通过devm_snd_dmaengine_pcm_register注册了一个dma的驱动</p><h2 id="Codec-驱动：dummy-codec"><a href="#Codec-驱动：dummy-codec" class="headerlink" title="Codec 驱动：dummy_codec"></a>Codec 驱动：dummy_codec</h2><p>dummy_codec为一个基础的codec代码，我在此基础上修改从而实现了讯飞模块和ti模块的纯数字I2S音频输入输出的驱动。</p><hr><h1 id="I2S相关知识"><a href="#I2S相关知识" class="headerlink" title="I2S相关知识"></a>I2S相关知识</h1><p>I2S有3个主要信号：</p><ol><li><strong>SCLK（BCLK）</strong>：串行时钟，也叫位时钟（BCLK），即对应数字音频的每一位数据，SCLK都有1个脉冲。**</li><li><strong>LRCK</strong>：帧时钟，用于切换左右声道的数据。LRCK的频率=采样频率。通常有8K/16K/32K /44.1K等采样率</li><li><strong>SDATA</strong>：串行数据，就是用二进制补码表示的音频数据</li><li><strong>MCLK</strong>：主时钟，也叫系统时钟（Sys Clock）。为了使系统间能够更好地同步，MCLK的频率与LRCK存在一个倍数关系。某些模块实际上不需要输入MCLK，讯飞模块就不需要</li></ol><p>通常情况下：</p><p>​    <strong>SCLK的频率=2×采样频率×采样位数</strong> </p><p>根据SDATA数据相对于LRCK和SCLK的位置不同，I2S格式分为：</p><ol><li><p>左对齐（较少使用）</p><p><img src="Rk3399 Android音频驱动总结-2.png" alt=""></p></li><li><p>I2S格式（即飞利浦规定的格式）</p><p><img src="Rk3399 Android音频驱动总结-3.png" alt=""></p></li><li><p>右对齐（也叫日本格式、普通格式）。</p><p><img src="Rk3399 Android音频驱动总结-4.png" alt=""></p></li></ol>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;常用操作&quot;&gt;&lt;a href=&quot;#常用操作&quot; class=&quot;headerlink&quot; title=&quot;常用操作&quot;&gt;&lt;/a&gt;常用操作&lt;/h1&gt;&lt;h5 id=&quot;hexo-生成页面&quot;&gt;&lt;a href=&quot;#hexo-生成页面&quot; class=&quot;headerlink&quot; title=
+        &lt;h1 id=&quot;整体音频驱动框架&quot;&gt;&lt;a href=&quot;#整体音频驱动框架&quot; class=&quot;headerlink&quot; title=&quot;整体音频驱动框架&quot;&gt;&lt;/a&gt;整体音频驱动框架&lt;/h1&gt;&lt;p&gt;音频硬件设备驱动，由三大部分组成，分别是 &lt;strong&gt;Machine、Platform、
       
     
     </summary>
     
-      <category term="备忘" scheme="/categories/%E5%A4%87%E5%BF%98/"/>
+      <category term="Android" scheme="/categories/Android/"/>
+    
+      <category term="驱动" scheme="/categories/Android/%E9%A9%B1%E5%8A%A8/"/>
     
     
-      <category term="hexo" scheme="/tags/hexo/"/>
+      <category term="rk3399" scheme="/tags/rk3399/"/>
+    
+      <category term="音频驱动" scheme="/tags/%E9%9F%B3%E9%A2%91%E9%A9%B1%E5%8A%A8/"/>
     
   </entry>
   
@@ -59,6 +63,31 @@
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title>hexo相关常用操作</title>
+    <link href="/wiki/%E5%A4%87%E5%BF%98/hexo%E7%9B%B8%E5%85%B3%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
+    <id>/wiki/备忘/hexo相关常用操作/</id>
+    <published>2018-11-16T02:08:44.000Z</published>
+    <updated>2019-02-25T09:34:46.308Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h1><h5 id="hexo-生成页面"><a href="#hexo-生成页面" class="headerlink" title="hexo 生成页面"></a>hexo 生成页面</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure><h5 id="启动hexo本地服务器"><a href="#启动hexo本地服务器" class="headerlink" title="启动hexo本地服务器"></a>启动hexo本地服务器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure><h5 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure><p>实际上不需要使用hexo其他指令来写文章，每次直接在source/_posts目录下新建md文档，然后直接hexo g 生成hexo d部署即可。这种方式需要手动修改tags和categories。</p><h1 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h1><p>1.在我采用的这个主题中，<strong>categories需要理解为导航</strong>。</p><p>2.网页上面的菜单栏（主页、关于），对应的是config.yml中的menu。实际上点击主页会显示所有主页目录下的所有文章，而我故意将主页目录下<u><strong>只放一个</strong></u>index.md，所以看上去主页就是一个页面。</p><p>3.关于首页，网页首页的配置在主题的config.yml中</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default_index_file: 首页.md # if this, it will display at site index instead of default index page</span><br></pre></td></tr></table></figure><p>   需要注意的是，这里的首页和导航栏上面的首页不一样。但我部署时会故意将这个和导航栏的那个首页同步。这样的显示更友好</p><p>4.一篇文章可以有多个tag，如下此文章就可以同时有两个tag了：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tags：</span><br><span class="line">- hexo</span><br><span class="line">- blog</span><br></pre></td></tr></table></figure><p>5.注意categories是分层级的，如下实际的显示是在导航栏里分了两层。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">categories: </span><br><span class="line">- 2019</span><br><span class="line">- 01</span><br></pre></td></tr></table></figure><p>6.每篇文章的头部配置中，toc: true 就会出现一个全局的目录</p><h1 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h1><p>1.<a href="https://github.com/zthxxx/hexo-theme-Wikitten/blob/master/README_zh-CN.md#Configuration" rel="external nofollow noopener noreferrer" target="_blank">hexo-theme-Wikitten 主题</a></p><p>2.<a href="https://hexo.io/zh-cn/docs/deployment" rel="external nofollow noopener noreferrer" target="_blank">hexo官方文档</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;常用操作&quot;&gt;&lt;a href=&quot;#常用操作&quot; class=&quot;headerlink&quot; title=&quot;常用操作&quot;&gt;&lt;/a&gt;常用操作&lt;/h1&gt;&lt;h5 id=&quot;hexo-生成页面&quot;&gt;&lt;a href=&quot;#hexo-生成页面&quot; class=&quot;headerlink&quot; title=
+      
+    
+    </summary>
+    
+      <category term="备忘" scheme="/categories/%E5%A4%87%E5%BF%98/"/>
+    
+    
+      <category term="hexo" scheme="/tags/hexo/"/>
     
   </entry>
   

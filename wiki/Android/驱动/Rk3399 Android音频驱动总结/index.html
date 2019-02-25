@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>RK3399 Android 音频驱动总结 | LIIHAG</title>
+    
+    
+        <meta name="keywords" content="rk3399,音频驱动">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="整体音频驱动框架音频硬件设备驱动，由三大部分组成，分别是 Machine、Platform、Code  snd_card： snd_card可以说是整个ALSA音频驱动最顶层的一个结构，整个声卡的软件逻辑结构开始于该结构，几乎所有与声音相关的逻辑设备都是在snd_card的管理之下，声卡驱动的第一个动作通常就是创建一个snd_card结构体。 Machine驱动中通常会注册snd_card。Mac">
+<meta name="keywords" content="rk3399,音频驱动">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RK3399 Android 音频驱动总结">
+<meta property="og:url" content="/wiki/Android/驱动/Rk3399 Android音频驱动总结/index.html">
+<meta property="og:site_name" content="LIIHAG">
+<meta property="og:description" content="整体音频驱动框架音频硬件设备驱动，由三大部分组成，分别是 Machine、Platform、Code  snd_card： snd_card可以说是整个ALSA音频驱动最顶层的一个结构，整个声卡的软件逻辑结构开始于该结构，几乎所有与声音相关的逻辑设备都是在snd_card的管理之下，声卡驱动的第一个动作通常就是创建一个snd_card结构体。 Machine驱动中通常会注册snd_card。Mac">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/Rk3399%20Android音频驱动总结-1.png">
+<meta property="og:image" content="/wiki/Android/驱动/Rk3399%20Android音频驱动总结/Rk3399%20Android音频驱动总结-2.png">
+<meta property="og:image" content="/wiki/Android/驱动/Rk3399%20Android音频驱动总结/Rk3399%20Android音频驱动总结-3.png">
+<meta property="og:image" content="/wiki/Android/驱动/Rk3399%20Android音频驱动总结/Rk3399%20Android音频驱动总结-4.png">
+<meta property="og:updated_time" content="2019-02-25T12:07:23.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RK3399 Android 音频驱动总结">
+<meta name="twitter:description" content="整体音频驱动框架音频硬件设备驱动，由三大部分组成，分别是 Machine、Platform、Code  snd_card： snd_card可以说是整个ALSA音频驱动最顶层的一个结构，整个声卡的软件逻辑结构开始于该结构，几乎所有与声音相关的逻辑设备都是在snd_card的管理之下，声卡驱动的第一个动作通常就是创建一个snd_card结构体。 Machine驱动中通常会注册snd_card。Mac">
+<meta name="twitter:image" content="/Rk3399%20Android音频驱动总结-1.png">
+    
+
+    
+        <link rel="alternate" href="/atom.xml" title="LIIHAG" type="application/atom+xml">
+    
+
+    
+        <link rel="icon" href="/main/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="/libs/jquery/plugins/cookie/1.4.1/jquery.cookie.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+    
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+</head>
+</html>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">LIIHAG</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/home">首页</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么...">
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            CATEGORIES: '导航',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/home">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索">
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap" id="categories">
+        <h3 class="widget-title">
+            <span>导航</span>
+            &nbsp;
+            <a id="allExpand" href="#">
+                <i class="fa fa-angle-double-up fa-2x"></i>
+            </a>
+        </h3>
+        
+        
+        
+         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            Android
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;"> 
+                    <li class="directory open">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            驱动
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file active"><a href="/wiki/Android/驱动/Rk3399 Android音频驱动总结/">RK3399 Android 音频驱动总结</a></li>  </ul> 
+                    </li> 
+                     </ul> 
+                    </li> 
+                    
+                    <li class="directory">
+                        <a href="#" data-role="directory">
+                            <i class="fa fa-folder-open"></i>
+                            &nbsp;
+                            备忘
+                        </a>
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/备忘/hexo相关常用操作/">hexo相关常用操作</a></li>  </ul> 
+                    </li> 
+                     <li class="file"><a href="/wiki/首页/">LIIHAG</a></li>  </ul> 
+    </div>
+    <script>
+        $(document).ready(function() {
+            var iconFolderOpenClass  = 'fa-folder-open';
+            var iconFolderCloseClass = 'fa-folder';
+            var iconAllExpandClass = 'fa-angle-double-down';
+            var iconAllPackClass = 'fa-angle-double-up';
+            // Handle directory-tree expansion:
+            // 左键单独展开目录
+            $(document).on('click', '#categories a[data-role="directory"]', function (event) {
+                event.preventDefault();
+
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var subtree = $(this).siblings('ul');
+                icon.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if (expanded) {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideUp({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderCloseClass);
+                } else {
+                    if (typeof subtree != 'undefined') {
+                        subtree.slideDown({ duration: 100 });
+                    }
+                    icon.addClass(iconFolderOpenClass);
+                }
+            });
+            // 右键展开下属所有目录
+            $('#categories a[data-role="directory"]').bind("contextmenu", function(event){
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconFolderOpenClass);
+                var listNode = $(this).siblings('ul');
+                var subtrees = $.merge(listNode.find('li ul'), listNode);
+                var icons = $.merge(listNode.find('.fa'), icon);
+                icons.removeClass(iconFolderOpenClass).removeClass(iconFolderCloseClass);
+                if(expanded) {
+                    subtrees.slideUp({ duration: 100 });
+                    icons.addClass(iconFolderCloseClass);
+                } else {
+                    subtrees.slideDown({ duration: 100 });
+                    icons.addClass(iconFolderOpenClass);
+                }
+            })
+            // 展开关闭所有目录按钮
+            $(document).on('click', '#allExpand', function (event) {
+                event.preventDefault();
+                
+                var icon = $(this).children('.fa');
+                var expanded = icon.hasClass(iconAllExpandClass);
+                icon.removeClass(iconAllExpandClass).removeClass(iconAllPackClass);
+                if(expanded) {
+                    $('#sidebar .fa.fa-folder').removeClass('fa-folder').addClass('fa-folder-open')
+                    $('#categories li ul').slideDown({ duration: 100 });
+                    icon.addClass(iconAllPackClass);
+                } else {
+                    $('#sidebar .fa.fa-folder-open').removeClass('fa-folder-open').addClass('fa-folder')
+                    $('#categories li ul').slideUp({ duration: 100 });
+                    icon.addClass(iconAllExpandClass);
+                }
+            });  
+        });
+    </script>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+            <section id="main"><article id="post-Android/驱动/Rk3399 Android音频驱动总结" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/驱动/">驱动</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/rk3399/">rk3399</a>, <a class="tag-link" href="/tags/音频驱动/">音频驱动</a>
+    </div>
+
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/wiki/Android/驱动/Rk3399 Android音频驱动总结/">
+            <time datetime="2019-02-25T12:07:44.000Z" itemprop="datePublished">2019-02-25</time>
+        </a>
+    </div>
+
+
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                    </div>
+                
+                
+    
+        <h1 class="article-title" itemprop="name">
+            RK3399 Android 音频驱动总结
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#整体音频驱动框架"><span class="toc-number">1.</span> <span class="toc-text">整体音频驱动框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Machine驱动"><span class="toc-number">1.1.</span> <span class="toc-text">Machine驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Platform驱动"><span class="toc-number">1.2.</span> <span class="toc-text">Platform驱动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CODEC驱动"><span class="toc-number">1.3.</span> <span class="toc-text">CODEC驱动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RK3399的音频驱动"><span class="toc-number">2.</span> <span class="toc-text">RK3399的音频驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Machine驱动：simple-card"><span class="toc-number">2.1.</span> <span class="toc-text">Machine驱动：simple_card</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Platform驱动：-rockchip-i2s"><span class="toc-number">2.2.</span> <span class="toc-text">Platform驱动： rockchip_i2s</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Codec-驱动：dummy-codec"><span class="toc-number">2.3.</span> <span class="toc-text">Codec 驱动：dummy_codec</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#I2S相关知识"><span class="toc-number">3.</span> <span class="toc-text">I2S相关知识</span></a></li></ol>
+                </div>
+            
+        
+        
+            <h1 id="整体音频驱动框架"><a href="#整体音频驱动框架" class="headerlink" title="整体音频驱动框架"></a>整体音频驱动框架</h1><p>音频硬件设备驱动，由三大部分组成，分别是 <strong>Machine、Platform、Code</strong></p>
+<p><img src="/Rk3399 Android音频驱动总结-1.png" alt=""></p>
+<p><strong>snd_card</strong>： snd_card可以说是整个ALSA音频驱动最顶层的一个结构，整个声卡的软件逻辑结构开始于该结构，几乎所有与声音相关的逻辑设备都是在snd_card的管理之下，声卡驱动的第一个动作通常就是创建一个snd_card结构体。</p>
+<p>Machine驱动中通常会注册snd_card。Machine中会绑定Platform和codec</p>
+<p>Platform驱动通常对应的是CPU端的I2S操作。</p>
+<p>Codec驱动通常对应的是单独的codec，Codec驱动与平台无关。</p>
+<p>一次音频设置的大体流程为： 设置machine–》machine分别设置Platform和Codec </p>
+<p>Dai的概念：Platform驱动和Codec驱动，通常通过Dai Driver来和Machine通信。</p>
+<h2 id="Machine驱动"><a href="#Machine驱动" class="headerlink" title="Machine驱动"></a>Machine驱动</h2><p>一般来说Machine对应的是一个linux platform 设备。</p>
+<p>Machine驱动中会初始化一个snd_card结构体，snd_card结构体中有个关键的snd_soc_dai_link。snd_soc_dai_link就是用来绑定codec和Platform使用的。</p>
+<p>在初始化snd_card后，Machine会通过snd_soc_register_card来注册一个声卡设备（snd_card）。</p>
+<h2 id="Platform驱动"><a href="#Platform驱动" class="headerlink" title="Platform驱动"></a>Platform驱动</h2><p>Platform驱动通常对应CPU端的I2S或其他音频格式接口。也就是用来设置CPU内部操作的，可能会涉及到相关的dma操作。</p>
+<p>snd_soc_dai_driver：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">struct snd_soc_dai_driver &#123;</span><br><span class="line">	<span class="comment">/* DAI description */</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">char</span> *name;<span class="comment">//ALOS就是通过这name来绑定machine中的dailink，</span></span><br><span class="line">	unsigned <span class="keyword">int</span> id;</span><br><span class="line">	unsigned <span class="keyword">int</span> base;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* DAI driver callbacks */</span></span><br><span class="line">	<span class="keyword">int</span> (*probe)(struct snd_soc_dai *dai);<span class="comment">//初次绑定dai时执行的操作</span></span><br><span class="line">	<span class="keyword">int</span> (*remove)(struct snd_soc_dai *dai);</span><br><span class="line">	<span class="keyword">int</span> (*suspend)(struct snd_soc_dai *dai);</span><br><span class="line">	<span class="keyword">int</span> (*resume)(struct snd_soc_dai *dai);</span><br><span class="line">	<span class="comment">/* compress dai */</span></span><br><span class="line">	<span class="keyword">int</span> (*compress_new)(struct snd_soc_pcm_runtime *rtd, <span class="keyword">int</span> num);</span><br><span class="line">	<span class="comment">/* DAI is also used for the control bus */</span></span><br><span class="line">	bool bus_control;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* ops */</span></span><br><span class="line">	<span class="keyword">const</span> struct snd_soc_dai_ops *ops;<span class="comment">//实际上主要的相关操作：设置时钟，波特率等</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* DAI capabilities */</span></span><br><span class="line">	struct snd_soc_pcm_stream capture;<span class="comment">//实际的capture流的能力，如果不设此值，表示没有capture的pcm节点</span></span><br><span class="line">	struct snd_soc_pcm_stream playback<span class="comment">//实际的palyback流的能力，如果不设此值，表示没有capture的pcm节点</span></span><br><span class="line">	unsigned <span class="keyword">int</span> symmetric_rates:<span class="number">1</span>;</span><br><span class="line">	unsigned <span class="keyword">int</span> symmetric_channels:<span class="number">1</span>;</span><br><span class="line">	unsigned <span class="keyword">int</span> symmetric_samplebits:<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* probe ordering - for components with runtime dependencies */</span></span><br><span class="line">	<span class="keyword">int</span> probe_order;</span><br><span class="line">	<span class="keyword">int</span> remove_order;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>machine 通过snd_soc_add_platform来注册snd_soc_dai_driver</p>
+<h2 id="CODEC驱动"><a href="#CODEC驱动" class="headerlink" title="CODEC驱动"></a>CODEC驱动</h2><p>codec驱动同样需要实例化上面说的snd_soc_dai_driver来与machine联系，同时还要注册一个snd_soc_codec_driver驱动来实现codec自身的相关操作。</p>
+<p>snd_soc_dai_driver和snd_soc_codec_driver通过snd_soc_register_codec来注册绑定。</p>
+<h1 id="RK3399的音频驱动"><a href="#RK3399的音频驱动" class="headerlink" title="RK3399的音频驱动"></a>RK3399的音频驱动</h1><h2 id="Machine驱动：simple-card"><a href="#Machine驱动：simple-card" class="headerlink" title="Machine驱动：simple_card"></a>Machine驱动：simple_card</h2><p>Rk3399比较推荐使用simple card来充当machine的角色。对应驱动文件路径：\sound\soc\generic\simple-card.c。</p>
+<p>simple-card的相关dts配置可以参考内核文档，需要注意的是：</p>
+<p>1.在CPU或codec的子节点中，如果指定了clock设备，那么该在子节点被启动或停用时此clock会自动被使能或失能。无需额外操作。这个clock通常是用于给外设提供mclk，所以通常挂载codec的节点下。</p>
+<p>2.<strong>默认是CPU为I2S主设备</strong>，除非指定了bitclock-master和frame-master</p>
+<p>3.默认只有一个dailink，如果只有一个dailink，则需要在每个属性或节点前添加simple-audio-card,前缀。多个dailink则不能添加</p>
+<p>4.simple card同样支持tdm格式</p>
+<h2 id="Platform驱动：-rockchip-i2s"><a href="#Platform驱动：-rockchip-i2s" class="headerlink" title="Platform驱动： rockchip_i2s"></a>Platform驱动： rockchip_i2s</h2><p>实际上在rockchip i2s驱动中，是通过devm_snd_soc_register_component封装的snd_soc_add_platform</p>
+<p>此外，还通过devm_snd_dmaengine_pcm_register注册了一个dma的驱动</p>
+<h2 id="Codec-驱动：dummy-codec"><a href="#Codec-驱动：dummy-codec" class="headerlink" title="Codec 驱动：dummy_codec"></a>Codec 驱动：dummy_codec</h2><p>dummy_codec为一个基础的codec代码，我在此基础上修改从而实现了讯飞模块和ti模块的纯数字I2S音频输入输出的驱动。</p>
+<hr>
+<h1 id="I2S相关知识"><a href="#I2S相关知识" class="headerlink" title="I2S相关知识"></a>I2S相关知识</h1><p>I2S有3个主要信号：</p>
+<ol>
+<li><strong>SCLK（BCLK）</strong>：串行时钟，也叫位时钟（BCLK），即对应数字音频的每一位数据，SCLK都有1个脉冲。**</li>
+<li><strong>LRCK</strong>：帧时钟，用于切换左右声道的数据。LRCK的频率=采样频率。通常有8K/16K/32K /44.1K等采样率</li>
+<li><strong>SDATA</strong>：串行数据，就是用二进制补码表示的音频数据</li>
+<li><strong>MCLK</strong>：主时钟，也叫系统时钟（Sys Clock）。为了使系统间能够更好地同步，MCLK的频率与LRCK存在一个倍数关系。某些模块实际上不需要输入MCLK，讯飞模块就不需要</li>
+</ol>
+<p>通常情况下：</p>
+<p>​    <strong>SCLK的频率=2×采样频率×采样位数</strong> </p>
+<p>根据SDATA数据相对于LRCK和SCLK的位置不同，I2S格式分为：</p>
+<ol>
+<li><p>左对齐（较少使用）</p>
+<p><img src="Rk3399 Android音频驱动总结-2.png" alt=""></p>
+</li>
+<li><p>I2S格式（即飞利浦规定的格式）</p>
+<p><img src="Rk3399 Android音频驱动总结-3.png" alt=""></p>
+</li>
+<li><p>右对齐（也叫日本格式、普通格式）。</p>
+<p><img src="Rk3399 Android音频驱动总结-4.png" alt=""></p>
+</li>
+</ol>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+    
+        <a href="/wiki/首页/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">LIIHAG</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
+</section>
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            yly &copy; 2019 
+            <a rel="external nofollow noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png"></a>
+            <br> Powered by <a href="http://hexo.io/" target="_blank" rel="external nofollow noopener noreferrer">Hexo</a>. Theme - <a href="https://liihag.github.io" rel="external nofollow noopener noreferrer" target="_blank">LIIHAG</a>
+            
+                <br>
+                <span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i> <span id="busuanzi_value_site_pv"></span></span>
+                &nbsp;|&nbsp;
+                <span id="busuanzi_container_site_pv"><i class="fa fa-user"></i> <span id="busuanzi_value_site_uv"></span></span>
+            
+        </div>
+    </div>
+</footer>
+
+        
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+        <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true,
+            TeX: {
+                equationNumbers: {
+                  autoNumber: 'AMS'
+                }
+            }
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
