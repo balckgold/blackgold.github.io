@@ -837,6 +837,7 @@ article {
   font-size: 2em;
   color: #565a5f;
   text-decoration: none;
+  text-align: center;
   line-height: 1.3em;
 }
 a.article-title:visited {
