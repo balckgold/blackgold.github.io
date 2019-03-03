@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="/"/>
-  <updated>2019-02-28T12:30:51.334Z</updated>
+  <updated>2019-03-03T07:55:04.933Z</updated>
   <id>/</id>
   
   <author>
@@ -17,13 +17,42 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>parse使用bitnami的Docker部署方式备忘</title>
+    <link href="/wiki/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF%E7%9B%B8%E5%85%B3/parse%E4%BD%BF%E7%94%A8bitnami%E7%9A%84Docker%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F%E5%A4%87%E5%BF%98/"/>
+    <id>/wiki/其他技术相关/parse使用bitnami的Docker部署方式备忘/</id>
+    <published>2019-03-02T06:55:32.000Z</published>
+    <updated>2019-03-03T07:55:04.933Z</updated>
+    
+    <content type="html"><![CDATA[<p>主要来自于bitnami 官方的<a href="https://github.com/bitnami/bitnami-docker-parse#how-to-use-this-image" rel="external nofollow noopener noreferrer" target="_blank">parse github页面</a>的相关阅读记录，备忘下。</p><p>优先采用docker compase的运行方式，如下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>###从bitnami的仓库中下载parse的compase文件</span><br><span class="line"><span class="meta">$</span> curl -sSL https://raw.githubusercontent.com/bitnami/bitnami-docker-parse/master/docker-compose.yml &gt; docker-compose.yml</span><br><span class="line"><span class="meta">#</span>###启动parse</span><br><span class="line"><span class="meta">$</span> docker-compose up -d</span><br></pre></td></tr></table></figure><p>具体的docker-compose.yml文件需要修改：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#这个version的版本不知何用</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">'2'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  mongodb:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'bitnami/mongodb:latest'</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">    <span class="comment">#为了持续集成，数据从本地路径映射过去，勿忘半引号</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'/path/to/your/local/mongodb_data:/bitnami'</span></span><br><span class="line"><span class="attr">  parse:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'bitnami/parse:latest'</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line">    <span class="comment">#使能parse cloud</span></span><br><span class="line">    <span class="comment">#注意这里的坑 一旦使能该选项，必须要在映射的目录中放入main.js否则会报错。</span></span><br><span class="line">    <span class="comment">#  - PARSE_ENABLE_CLOUD_CODE</span></span><br><span class="line">    <span class="comment">#这里是ip</span></span><br><span class="line"><span class="attr">      PARSE_HOST:</span> <span class="string">'127.0.0.1'</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'1337:1337'</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line">    <span class="comment">#为了持续集成，数据从本地路径映射过去，勿忘半引号</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'/path/to/parse-persistence:/bitnami'</span></span><br><span class="line">    <span class="comment">#持续集成的parce clode的路径</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'/path/to/your/local/cloud:/opt/bitnami/parse/cloud'</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">mongodb</span></span><br><span class="line"><span class="attr">  parse-dashboard:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">'bitnami/parse-dashboard:latest'</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line">    <span class="comment">#第一个4041是宿主机端口</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'4041:4040'</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">'parse_dashboard_data:/bitnami'</span></span><br><span class="line"><span class="attr">    depends_on:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">parse</span></span><br></pre></td></tr></table></figure><h3 id="巨坑之non-root"><a href="#巨坑之non-root" class="headerlink" title="巨坑之non-root"></a>巨坑之non-root</h3><p> bitnami可能是为了避免docker的root风险，在最新版本中采用了non root的docker。这本来问题不大，可是他在其dockerfile中直接使用的是1001用户。</p><p>这样的问题是假如宿主机挂载的目录中（就是上面yml中那几个映射的目录），针对1001用户没有读写权限，那么会导致docker启动失败。</p><p>而按他们推荐的修改dockerfile 我觉得太麻烦。</p><p>于是直接对那几个挂载的目录执行 chown -R 1001:1001 XXX（被挂载的目录）</p><p>解决</p><h3 id="小坑之PARSE-HOST"><a href="#小坑之PARSE-HOST" class="headerlink" title="小坑之PARSE_HOST"></a>小坑之PARSE_HOST</h3><p>在enviroment中配置了PARSE_HOST，但是实际上这个值无法传递到parse dashboard中，导致dashboard的host为外网ip，在调试中可能出现连接不上PARSE_HOST的问题。</p><p>解决：</p><p>​    开启三个docker containner后，进入dash board对应的那个外挂目录，配置config.json，修改serverURL为对应的值（与在docker-compose.yml配置的PARSE_HOST一致即可）。然后重启containner</p><h3 id="其他environment备忘"><a href="#其他environment备忘" class="headerlink" title="其他environment备忘"></a>其他environment备忘</h3><ul><li><code>PARSE_HOST</code>: Parse server host. Default: <strong>127.0.0.1</strong></li><li><code>PARSE_PORT_NUMBER_NUMBER</code>: Parse server port. Default: <strong>1337</strong></li><li><code>PARSE_MOUNT_PATH</code>: Parse server mount path. Default: <strong>/parse</strong></li><li><code>PARSE_APP_ID</code>: Parse server App ID. Default: <strong>myappID</strong></li><li><code>PARSE_MASTER_KEY</code>: Parse server Master Key: <strong>mymasterKey</strong></li><li><code>PARSE_ENABLE_CLOUD_CODE</code>: Enable Parse Cloud Code support. Default <strong>no</strong></li><li><code>MONGODB_HOST</code>: Hostname for Mongodb server. Default: <strong>mongodb</strong></li><li><code>MONGODB_PORT_NUMBER</code>: Port used by Mongodb server. Default: <strong>27017</strong></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;主要来自于bitnami 官方的&lt;a href=&quot;https://github.com/bitnami/bitnami-docker-parse#how-to-use-this-image&quot; rel=&quot;external nofollow noopener noreferre
+      
+    
+    </summary>
+    
+      <category term="其他技术相关" scheme="/categories/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF%E7%9B%B8%E5%85%B3/"/>
+    
+    
+      <category term="parse" scheme="/tags/parse/"/>
+    
+      <category term="bitnami" scheme="/tags/bitnami/"/>
+    
+      <category term="docker" scheme="/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
     <title>那些撩人的句子</title>
     <link href="/wiki/%E6%9D%82%E8%B0%88/%E9%82%A3%E4%BA%9B%E6%92%A9%E4%BA%BA%E7%9A%84%E5%8F%A5%E5%AD%90/"/>
     <id>/wiki/杂谈/那些撩人的句子/</id>
     <published>2019-02-28T12:07:44.000Z</published>
-    <updated>2019-02-28T12:30:51.334Z</updated>
+    <updated>2019-02-28T12:52:33.064Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="歌词"><a href="#歌词" class="headerlink" title="歌词"></a>歌词</h1><hr><h2 id="解忧邵帅"><a href="#解忧邵帅" class="headerlink" title="解忧邵帅"></a>解忧邵帅</h2><h3 id="写给黄淮"><a href="#写给黄淮" class="headerlink" title="写给黄淮"></a>写给黄淮</h3><p>你是我患得患失的梦，我是你可有可无的人。</p><p>毕竟这穿越山河的箭，刺的都是用情致疾的人。</p><p>你是我辗转反侧的梦，我是你如梦山河的故人。</p><p>就让这牵肠挂肚的酒，硫酸一样刺激在你我的心头。</p><h3 id="你是人间四月天"><a href="#你是人间四月天" class="headerlink" title="你是人间四月天"></a>你是人间四月天</h3><p>愿你在我看不到的地方安然无恙，</p><p>愿你的冬天永远不缺暖阳。</p><p>愿你的明天不再经历雨打风霜，</p><p>愿你的未来永远热泪盈眶。</p><hr><p>愿我在六十岁的时候陪你看看夕阳，</p><p>愿我在想起你嘴角微微上扬。</p><p>愿我在北方的冬天为你披件衣裳，</p><p>愿我在一贫如洗能有你在身旁。</p><h3 id="少年依然在"><a href="#少年依然在" class="headerlink" title="少年依然在"></a>少年依然在</h3><p>岁岁有黄菊 千载遇到你</p><p>所爱映星海 回首少年依然在</p><h3 id="南风北巷"><a href="#南风北巷" class="headerlink" title="南风北巷"></a>南风北巷</h3><p>人去堂空难见影，琴调弦高更伤情。</p><p>说不出，想紧紧把你留住。</p><p>送你一湖的月光，许我几滴眼泪的清凉。</p><p>所以然，别打碎 我的幻想。</p><h1 id="其他摘录"><a href="#其他摘录" class="headerlink" title="其他摘录"></a>其他摘录</h1><hr><h2 id="吴晓波"><a href="#吴晓波" class="headerlink" title="吴晓波"></a>吴晓波</h2><p>生命就应该浪费在美好的事物上</p><p>应该有一份不以此为生的职业</p><p>好朋友见一面少一年</p><h2 id="OTHERS"><a href="#OTHERS" class="headerlink" title="OTHERS"></a>OTHERS</h2><hr><p>愿你浪荡一生 归来仍是少年</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="歌词"><a href="#歌词" class="headerlink" title="歌词"></a>歌词</h1><hr><h2 id="解忧邵帅"><a href="#解忧邵帅" class="headerlink" title="解忧邵帅"></a>解忧邵帅</h2><h3 id="写给黄淮"><a href="#写给黄淮" class="headerlink" title="写给黄淮"></a>写给黄淮</h3><p>你是我患得患失的梦，我是你可有可无的人。</p><p>毕竟这穿越山河的箭，刺的都是用情致疾的人。</p><p>你是我辗转反侧的梦，我是你如梦山河的故人。</p><p>就让这牵肠挂肚的酒，硫酸一样刺激在你我的心头。</p><h3 id="你是人间四月天"><a href="#你是人间四月天" class="headerlink" title="你是人间四月天"></a>你是人间四月天</h3><p>愿你在我看不到的地方安然无恙，</p><p>愿你的冬天永远不缺暖阳。</p><p>愿你的明天不再经历雨打风霜，</p><p>愿你的未来永远热泪盈眶。</p><hr><p>愿我在六十岁的时候陪你看看夕阳，</p><p>愿我在想起你嘴角微微上扬。</p><p>愿我在北方的冬天为你披件衣裳，</p><p>愿我在一贫如洗能有你在身旁。</p><h3 id="少年依然在"><a href="#少年依然在" class="headerlink" title="少年依然在"></a>少年依然在</h3><p>岁岁有黄菊 千载遇到你</p><p>所爱映星海 回首少年依然在</p><h3 id="南风北巷"><a href="#南风北巷" class="headerlink" title="南风北巷"></a>南风北巷</h3><p>人去堂空难见影，琴调弦高更伤情。</p><p>说不出，想紧紧把你留住。</p><p>送你一湖的月光，许我几滴眼泪的清凉。</p><p>所以然，别打碎 我的幻想。</p><h1 id="其他摘录"><a href="#其他摘录" class="headerlink" title="其他摘录"></a>其他摘录</h1><hr><h2 id="吴晓波"><a href="#吴晓波" class="headerlink" title="吴晓波"></a>吴晓波</h2><p>生命就应该浪费在美好的事物上</p><p>应该有一份不以此为生的职业</p><p>好朋友见一面少一年</p><h2 id="OTHERS"><a href="#OTHERS" class="headerlink" title="OTHERS"></a>OTHERS</h2><p>愿你浪荡一生 归来仍是少年</p>]]></content>
     
     <summary type="html">
     
@@ -47,9 +76,9 @@
     <link href="/wiki/%E6%9D%82%E8%B0%88/%E5%85%B3%E4%BA%8Ess/"/>
     <id>/wiki/杂谈/关于ss/</id>
     <published>2019-02-26T12:07:44.000Z</published>
-    <updated>2019-02-28T12:21:49.944Z</updated>
+    <updated>2019-03-01T03:54:19.203Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="为何写下此文"><a href="#为何写下此文" class="headerlink" title="为何写下此文"></a>为何写下此文</h1><p>​    14年接触至今的一个开源项目：ss，我只是一个使用者，也了解其中的众多的故事，甚至一度想拿此项目来牟利。今日google了一下，发现<a href="https://www.starduster.me/2015/08/21/say-goodbye-to-ss/" rel="external nofollow noopener noreferrer" target="_blank">一篇文章</a>，此作者与我一样是一个较早接触此项目的人，阅此文后感想颇多。便记录下此时的心情。</p><h1 id="中国IT圈的现状"><a href="#中国IT圈的现状" class="headerlink" title="中国IT圈的现状"></a>中国IT圈的现状</h1><h2 id="门槛低"><a href="#门槛低" class="headerlink" title="门槛低"></a>门槛低</h2><p>​    14年时，知道ss的人并不是很多，我也是从一位义愤填膺的网友口中得知此项目，彼时惊讶于此项目作者的才能，那个时候了解tcp握手的大概流程，而此作者却已经用于实战，也第一次知道github上真的有开源的优秀国人的作品，也第一次能大量阅读国人在github上的讨论。</p><p>​    自以为进入了一个由优秀码农组成的一个小圈子。还傻乎乎跟人家一起讨论如何破解锐速，如何制作一件锐速破解包。</p><p>​    然而生活总是忙碌的，慢慢的淡忘了此事，我最后都没有跟ss的作者聊过。</p><p>​    直到有一次看到ss的项目显示被移除了，细看才知道是master分支被移除，而还是有一个dev分支的。看了被移除的声明，知道此事被政府所参与了。</p><p>​    我很震惊，这事虽然违法，可是一小群IT爱好者如何就能引起政府的关注？进一步了解，发现百度已经屏蔽ss的搜索。</p><p>​    具体时间我忘记了，我开始反思，各种搜索，发现ss的门槛真的很低了。甚至已经有人开始贩卖ss账号了。我在那时也起了贩卖ss账号的想法。</p><p>​    网上看到一个高中生，甚至一个喜欢专研的人，居然就可以安装ss并贩卖账号牟利。而那时的我第一想到的就是我也可以贩卖这些账号牟利，此时我手里还知道如何来大量套取亚马逊云的免费一年账号来提供服务器，心想这是可以空手套白狼一本万利的生意。于是我又在github上搜索修改了一套简单的账号数据库框架。准备贩卖账号。可后来又由于工作和生活，一直没精力来处理这些。作罢。</p><p>​    现在回头想想，那时的我不也是一个投机分子么？对于此项目我掌握的并不多，却想着利用一些信息差来赚取利益，有些可笑。或许我就是众多IT圈人的一个写照：能力不足，自以为是，投机倒把。</p><h2 id="基数大"><a href="#基数大" class="headerlink" title="基数大"></a>基数大</h2><p>​    门槛低就意味着IT圈人很多，后面发现到处充斥着中国码农，很多初高中生都有github账号了，他们的谈论有的虽然偏激，但也能看出他们懂得不少。</p><p>​    我无法表达这对我思想上的冲击。但毫无疑问我的自信是受了严重打击的。我甚至怀疑我工作上的那些技能，一个普通网民通过百度是不是就能完全掌握。</p><p>​    如此大量的网民中，我不过是沧海一粟。只不过我还要靠着这点知识养家，而或许人家只是在课余玩玩这些而已。</p><h2 id="人外有人"><a href="#人外有人" class="headerlink" title="人外有人"></a>人外有人</h2><p>​    后来在github上又看了一些其他项目，包括阿里巴巴的macaca，发现原来那些大机构的作品也不过如此。而又看了一个96年的大学生的一个作品，发现此人至少深度掌握了java js shell linux等多方面的技术，而且是精通。目前他的项目与ss一样，被大量的投机者关注着，这其中包括我。</p><p>​    原来，大公司的作品不一定优秀，年轻者不一定懂得就少，不考虑收入，IT这个领域是很公平的。人外有人不一定是指有我们未成见过的更优秀的人，而是指，我们看不尽这世界的人。</p><h2 id="关于技术、工作、生活"><a href="#关于技术、工作、生活" class="headerlink" title="关于技术、工作、生活"></a>关于技术、工作、生活</h2><p>不要倚老卖老，也不要妄自菲薄，能有一份养家的收入，也是不错的，要知足。</p><p>不要有35岁门槛的杞人忧天，也不要羡慕别人无忧无虑，就这样持续积累（技术），其他随缘吧，不要过于浮躁。</p><p>最后附上那片文章中的几句有意思的句子：</p><h3 id="与人斗，其乐无穷。"><a href="#与人斗，其乐无穷。" class="headerlink" title="与人斗，其乐无穷。"></a>与人斗，其乐无穷。</h3><h3 id="人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！"><a href="#人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！" class="headerlink" title="人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！"></a>人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！</h3>]]></content>
+    <content type="html"><![CDATA[<h1 id="为何写下此文"><a href="#为何写下此文" class="headerlink" title="为何写下此文"></a>为何写下此文</h1><p>​    14年接触至今的一个开源项目：ss，我只是一个使用者，也了解其中的众多的故事，甚至一度想拿此项目来牟利。今日google了一下，发现<a href="https://www.starduster.me/2015/08/21/say-goodbye-to-ss/" rel="external nofollow noopener noreferrer" target="_blank">一篇文章</a>，此作者与我一样是一个较早接触此项目的人，阅此文后感想颇多。便记录下此时的心情。</p><h1 id="中国IT圈的现状"><a href="#中国IT圈的现状" class="headerlink" title="中国IT圈的现状"></a>中国IT圈的现状</h1><h2 id="门槛低"><a href="#门槛低" class="headerlink" title="门槛低"></a>门槛低</h2><p>​    14年时，知道ss的人并不是很多，我也是从一位义愤填膺的网友口中得知此项目，彼时惊讶于此项目作者的才能，那个时候了解tcp握手的大概流程，而此作者却已经用于实战，也第一次知道github上真的有开源的优秀国人的作品，也第一次能大量阅读国人在github上的讨论。</p><p>​    自以为进入了一个由优秀码农组成的一个小圈子。还傻乎乎跟人家一起讨论如何破解锐速，如何制作一件锐速破解包。</p><p>​    然而生活总是忙碌的，慢慢的淡忘了此事，我最后都没有跟ss的作者聊过。</p><p>​    直到有一次看到ss的项目显示被移除了，细看才知道是master分支被移除，而还是有一个dev分支的。看了被移除的声明，知道此事被政府所参与了。</p><p>​    我很震惊，这事虽然违法，可是一小群IT爱好者如何就能引起政府的关注？进一步了解，发现百度已经屏蔽ss的搜索。</p><p>​    具体时间我忘记了，我开始反思，各种搜索，发现ss的门槛真的很低了。甚至已经有人开始贩卖ss账号了。我在那时也起了贩卖ss账号的想法。</p><p>​    网上看到一个高中生，甚至一个喜欢专研的人，居然就可以安装ss并贩卖账号牟利。而那时的我第一想到的就是我也可以贩卖这些账号牟利，此时我手里还知道如何来大量套取亚马逊云的免费一年账号来提供服务器，心想这是可以空手套白狼一本万利的生意。于是我又在github上搜索修改了一套简单的账号数据库框架。准备贩卖账号。可后来又由于工作和生活，一直没精力来处理这些。作罢。</p><p>​    现在回头想想，那时的我不也是一个投机分子么？对于此项目我掌握的并不多，却想着利用一些信息差来赚取利益，有些可笑。或许我就是众多IT圈人的一个写照：能力不足，自以为是，投机倒把。</p><h2 id="基数大"><a href="#基数大" class="headerlink" title="基数大"></a>基数大</h2><p>​    门槛低就意味着IT圈人很多，后面发现到处充斥着中国码农，很多初高中生都有github账号了，他们的谈论有的虽然偏激，但也能看出他们懂得不少。</p><p>​    我无法表达这对我思想上的冲击。但毫无疑问我的自信是受了严重打击的。我甚至怀疑我工作上的那些技能，一个普通网民通过百度是不是就能完全掌握。</p><p>​    如此大量的网民中，我不过是沧海一粟。只不过我还要靠着这点知识养家，而或许人家只是在课余玩玩这些而已。</p><h2 id="人外有人"><a href="#人外有人" class="headerlink" title="人外有人"></a>人外有人</h2><p>​    后来在github上又看了一些其他项目，包括阿里巴巴的macaca，发现原来那些大机构的作品也不过如此。而又看了一个96年的大学生的一个作品，发现此人至少深度掌握了java js shell linux等多方面的技术，而且是精通。目前他的项目与ss一样，被大量的投机者关注着，这其中包括我。</p><p>​    原来，大公司的作品不一定优秀，年轻者不一定懂得就少，不考虑收入，IT这个领域是很公平的。人外有人不一定是指有我们未成见过的更优秀的人，而是指，我们看不尽这世界的人。</p><h2 id="关于技术、工作、生活"><a href="#关于技术、工作、生活" class="headerlink" title="关于技术、工作、生活"></a>关于技术、工作、生活</h2><p>不要倚老卖老，也不要妄自菲薄，能有一份养家的收入，也是不错的，要知足。</p><p>不要有35岁门槛的杞人忧天，也不要羡慕别人无忧无虑，就这样持续积累（技术），其他随缘吧，不要过于浮躁，<strong>“但行好事，莫问前程”</strong>。</p><p>最后附上那片文章中的几句有意思的句子：</p><h3 id="与人斗，其乐无穷。"><a href="#与人斗，其乐无穷。" class="headerlink" title="与人斗，其乐无穷。"></a>与人斗，其乐无穷。</h3><h3 id="人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！"><a href="#人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！" class="headerlink" title="人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！"></a>人生永远追逐着幻光，但谁把幻光看作幻光，谁便沉入无边的苦海！</h3>]]></content>
     
     <summary type="html">
     
@@ -63,9 +92,9 @@
       <category term="杂谈" scheme="/categories/%E6%9D%82%E8%B0%88/"/>
     
     
-      <category term="杂谈" scheme="/tags/%E6%9D%82%E8%B0%88/"/>
-    
       <category term="ss" scheme="/tags/ss/"/>
+    
+      <category term="杂谈" scheme="/tags/%E6%9D%82%E8%B0%88/"/>
     
   </entry>
   
@@ -95,6 +124,36 @@
       <category term="rk3399" scheme="/tags/rk3399/"/>
     
       <category term="音频驱动" scheme="/tags/%E9%9F%B3%E9%A2%91%E9%A9%B1%E5%8A%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android Handler机制</title>
+    <link href="/wiki/Android/Framework/Android%20Handler%E6%9C%BA%E5%88%B6/"/>
+    <id>/wiki/Android/Framework/Android Handler机制/</id>
+    <published>2019-02-25T12:07:44.000Z</published>
+    <updated>2019-03-01T10:07:26.346Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-Handle的初步理解"><a href="#1-Handle的初步理解" class="headerlink" title="1.Handle的初步理解"></a>1.Handle的初步理解</h1><hr><p>​    Handler主要是用来传输并处理Message对象和Runnable对象的。其他线程通过调用Handler的sendmessage系列方法来发送给Hanlder所在的线程，Hanlder会在其所在的线程中处理这些消息。</p><p>​    Handler类有三个核心的成员变量：Looper、Callback、MessageQueue。</p><p>​    Looper类拥有两个核心变量：Thread和MessageQueue,且Loope、thread 、Messageq是一一绑定的。</p><p>​    更笼统的说：</p><p>​            一个Thread有一个looper，一个looper有一个messageQueue</p><p>​            一个Hanlder对应有一个looper。但一个Looper可以对应多个Handler。</p><p>​    最简单常用的用法：一个Thread有一个Looper和一个MessageQueue和一个Handler。<strong>通过暴露Handler</strong>给其他线程，其他线程就可以通过这个Hanlder来和这个Thread通信或传入CallBack给这个线程执行。</p><p>​    更粗暴的理解就是：Handler就是一个线程将自己伪装成一个打工者，接收别人的活（message）并干活（handle message）的</p><p>​    </p><p>​    </p><hr><h1 id="2-Hanlde对象"><a href="#2-Hanlde对象" class="headerlink" title="2.Hanlde对象"></a>2.Hanlde对象</h1><h3 id="Handler的构造函数"><a href="#Handler的构造函数" class="headerlink" title="Handler的构造函数"></a>Handler的构造函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public Handler(Looper looper, Callback callback, boolean async) &#123;</span><br><span class="line">    mLooper = looper;</span><br><span class="line">    mQueue = looper.mQueue;</span><br><span class="line">    mCallback = callback;</span><br><span class="line">    mAsynchronous = async;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>若不指定Looper，那么mLooper将为当前Thread绑定的Looper，mQueue对应的就是该Looper对应的</p><hr><h1 id="3-Looper对象"><a href="#3-Looper对象" class="headerlink" title="3.Looper对象"></a>3.Looper对象</h1><p>Looper对象的构造函数比较特殊。这里不做讨论。Looper露出了一系列的静态方法给Thread用：</p><h3 id="prepare"><a href="#prepare" class="headerlink" title="prepare():"></a>prepare():</h3><p>​    一个线程默认是没绑定Looper对象的，必须要在线程中调用prepare()方法来初始化并唯一绑定一个Looper对象。</p><h3 id="loop"><a href="#loop" class="headerlink" title="loop():"></a>loop():</h3><p>​    线程调用此方法后，会一直轮询该线程绑定的messagequeue中是否有message需要处理。如果有，就将message取出，并分发到message对象中指定的handler中去进行进一步处理。</p><p>实际上Looper的工作很简单，就像它名字一样，循环检查是否有message来，如果有，就将message丢到该message对象指定的handler中处理。（message类中有一个handler的变量）</p><hr><h1 id="4-Handler和Looper对应的关系"><a href="#4-Handler和Looper对应的关系" class="headerlink" title="4.Handler和Looper对应的关系"></a>4.Handler和Looper对应的关系</h1><p>​    从Hanlder的构造函数看出：一个Handler只能对应一个Looper，但是一个Looper可以对应多个Hanlder。</p><h1 id="5-Messenger类"><a href="#5-Messenger类" class="headerlink" title="5.Messenger类"></a>5.Messenger类</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Messenger(Handler target) &#123;</span><br><span class="line">    mTarget = target.getIMessenger();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Messenger类的构造函数数封装了一个Handler。这个类是handler类将自己封装后暴露给其他线程的，别的线程拿着这个Messenger就可以直接发送消息了。</p><p>这个类在asyncchannel通信中有用到。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;1-Handle的初步理解&quot;&gt;&lt;a href=&quot;#1-Handle的初步理解&quot; class=&quot;headerlink&quot; title=&quot;1.Handle的初步理解&quot;&gt;&lt;/a&gt;1.Handle的初步理解&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;​    Handler主要是用来传输并处
+      
+    
+    </summary>
+    
+      <category term="Android" scheme="/categories/Android/"/>
+    
+      <category term="Framework" scheme="/categories/Android/Framework/"/>
+    
+    
+      <category term="handler" scheme="/tags/handler/"/>
+    
+      <category term="binder" scheme="/tags/binder/"/>
     
   </entry>
   

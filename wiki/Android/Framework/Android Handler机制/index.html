@@ -3,22 +3,24 @@
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     
-    <title>标签: 音频驱动 | LIIHAG</title>
+    <title>Android Handler机制 | LIIHAG</title>
     
     
-        <meta name="keywords" content="LIIHAG">
+        <meta name="keywords" content="handler,binder">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="Liihag">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LIIHAG">
-<meta property="og:url" content="/tags/音频驱动/index.html">
+    <meta name="description" content="1.Handle的初步理解 ​    Handler主要是用来传输并处理Message对象和Runnable对象的。其他线程通过调用Handler的sendmessage系列方法来发送给Hanlder所在的线程，Hanlder会在其所在的线程中处理这些消息。 ​    Handler类有三个核心的成员变量：Looper、Callback、MessageQueue。 ​    Looper类拥有两个">
+<meta name="keywords" content="handler,binder">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Handler机制">
+<meta property="og:url" content="/wiki/Android/Framework/Android Handler机制/index.html">
 <meta property="og:site_name" content="LIIHAG">
-<meta property="og:description" content="Liihag">
+<meta property="og:description" content="1.Handle的初步理解 ​    Handler主要是用来传输并处理Message对象和Runnable对象的。其他线程通过调用Handler的sendmessage系列方法来发送给Hanlder所在的线程，Hanlder会在其所在的线程中处理这些消息。 ​    Handler类有三个核心的成员变量：Looper、Callback、MessageQueue。 ​    Looper类拥有两个">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-01T10:07:26.346Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LIIHAG">
-<meta name="twitter:description" content="Liihag">
+<meta name="twitter:title" content="Android Handler机制">
+<meta name="twitter:description" content="1.Handle的初步理解 ​    Handler主要是用来传输并处理Message对象和Runnable对象的。其他线程通过调用Handler的sendmessage系列方法来发送给Hanlder所在的线程，Hanlder会在其所在的线程中处理这些消息。 ​    Handler类有三个核心的成员变量：Looper、Callback、MessageQueue。 ​    Looper类拥有两个">
     
 
     
@@ -146,20 +148,20 @@
         
         
          <ul class="unstyled" id="tree" style="display: block;"> 
-                    <li class="directory">
+                    <li class="directory open">
                         <a href="#" data-role="directory">
                             <i class="fa fa-folder-open"></i>
                             &nbsp;
                             Android
                         </a>
                          <ul class="unstyled" id="tree" style="display: block;"> 
-                    <li class="directory">
+                    <li class="directory open">
                         <a href="#" data-role="directory">
                             <i class="fa fa-folder-open"></i>
                             &nbsp;
                             Framework
                         </a>
-                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file"><a href="/wiki/Android/Framework/Android Handler机制/">Android Handler机制</a></li>  </ul> 
+                         <ul class="unstyled" id="tree" style="display: block;">  <li class="file active"><a href="/wiki/Android/Framework/Android Handler机制/">Android Handler机制</a></li>  </ul> 
                     </li> 
                     
                     <li class="directory">
@@ -270,50 +272,129 @@
     <div id="toTop" class="fa fa-angle-up"></div>
 </aside>
             
-            <section id="main">
-<div class="timeline timeline-wrap">
-    <div class="timeline-row timeline-row-major">
-        <span class="node"><i class="fa fa-tag"></i></span>
-        <h1 class="title">#音频驱动</h1>
-    </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+            <section id="main"><article id="post-Android/Framework/Android Handler机制" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/wiki/Android/驱动/Rk3399 Android音频驱动总结/">RK3399 Android 音频驱动总结</a>
-        </h1>
-    
+                    <div class="article-meta">
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/Android/">Android</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/Framework/">Framework</a>
+    </div>
 
-                <div class="article-meta">
-                    
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/binder/">binder</a>, <a class="tag-link" href="/tags/handler/">handler</a>
+    </div>
+
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/wiki/Android/驱动/Rk3399 Android音频驱动总结/">
+        <a href="/wiki/Android/Framework/Android Handler机制/">
             <time datetime="2019-02-25T12:07:44.000Z" itemprop="datePublished">2019-02-25</time>
         </a>
     </div>
 
 
-                    
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/Android/">Android</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Android/驱动/">驱动</a>
-    </div>
-
-                    
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/rk3399/">rk3399</a>, <a class="tag-link" href="/tags/音频驱动/">音频驱动</a>
-    </div>
-
-                </div>
-            </div>
-        </div>
+                        
+                            <i class="fa fa-bar-chart"></i>
+                            <span id="busuanzi_container_site_pv"><span id="busuanzi_value_page_pv"></span></span>    
+                        
+                        
+                    </div>
+                
+                
     
-</div>
+        <h1 class="article-title" itemprop="name">
+            Android Handler机制
+        </h1>
+    
+
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+        
+            
+                <div id="toc" class="toc-article">
+                <strong class="toc-title">文章目录</strong>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Handle的初步理解"><span class="toc-number">1.</span> <span class="toc-text">1.Handle的初步理解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Hanlde对象"><span class="toc-number">2.</span> <span class="toc-text">2.Hanlde对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Handler的构造函数"><span class="toc-number">2.0.1.</span> <span class="toc-text">Handler的构造函数</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#3-Looper对象"><span class="toc-number">3.</span> <span class="toc-text">3.Looper对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#prepare"><span class="toc-number">3.0.1.</span> <span class="toc-text">prepare():</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loop"><span class="toc-number">3.0.2.</span> <span class="toc-text">loop():</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-Handler和Looper对应的关系"><span class="toc-number">4.</span> <span class="toc-text">4.Handler和Looper对应的关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-Messenger类"><span class="toc-number">5.</span> <span class="toc-text">5.Messenger类</span></a></li>
+                </div>
+            
+        
+        
+            <h1 id="1-Handle的初步理解"><a href="#1-Handle的初步理解" class="headerlink" title="1.Handle的初步理解"></a>1.Handle的初步理解</h1><hr>
+<p>​    Handler主要是用来传输并处理Message对象和Runnable对象的。其他线程通过调用Handler的sendmessage系列方法来发送给Hanlder所在的线程，Hanlder会在其所在的线程中处理这些消息。</p>
+<p>​    Handler类有三个核心的成员变量：Looper、Callback、MessageQueue。</p>
+<p>​    Looper类拥有两个核心变量：Thread和MessageQueue,且Loope、thread 、Messageq是一一绑定的。</p>
+<p>​    更笼统的说：</p>
+<p>​            一个Thread有一个looper，一个looper有一个messageQueue</p>
+<p>​            一个Hanlder对应有一个looper。但一个Looper可以对应多个Handler。</p>
+<p>​    最简单常用的用法：一个Thread有一个Looper和一个MessageQueue和一个Handler。<strong>通过暴露Handler</strong>给其他线程，其他线程就可以通过这个Hanlder来和这个Thread通信或传入CallBack给这个线程执行。</p>
+<p>​    更粗暴的理解就是：Handler就是一个线程将自己伪装成一个打工者，接收别人的活（message）并干活（handle message）的</p>
+<p>​    </p>
+<p>​    </p>
+<hr>
+<h1 id="2-Hanlde对象"><a href="#2-Hanlde对象" class="headerlink" title="2.Hanlde对象"></a>2.Hanlde对象</h1><h3 id="Handler的构造函数"><a href="#Handler的构造函数" class="headerlink" title="Handler的构造函数"></a>Handler的构造函数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public Handler(Looper looper, Callback callback, boolean async) &#123;</span><br><span class="line">    mLooper = looper;</span><br><span class="line">    mQueue = looper.mQueue;</span><br><span class="line">    mCallback = callback;</span><br><span class="line">    mAsynchronous = async;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若不指定Looper，那么mLooper将为当前Thread绑定的Looper，mQueue对应的就是该Looper对应的</p>
+<hr>
+<h1 id="3-Looper对象"><a href="#3-Looper对象" class="headerlink" title="3.Looper对象"></a>3.Looper对象</h1><p>Looper对象的构造函数比较特殊。这里不做讨论。Looper露出了一系列的静态方法给Thread用：</p>
+<h3 id="prepare"><a href="#prepare" class="headerlink" title="prepare():"></a>prepare():</h3><p>​    一个线程默认是没绑定Looper对象的，必须要在线程中调用prepare()方法来初始化并唯一绑定一个Looper对象。</p>
+<h3 id="loop"><a href="#loop" class="headerlink" title="loop():"></a>loop():</h3><p>​    线程调用此方法后，会一直轮询该线程绑定的messagequeue中是否有message需要处理。如果有，就将message取出，并分发到message对象中指定的handler中去进行进一步处理。</p>
+<p>实际上Looper的工作很简单，就像它名字一样，循环检查是否有message来，如果有，就将message丢到该message对象指定的handler中处理。（message类中有一个handler的变量）</p>
+<hr>
+<h1 id="4-Handler和Looper对应的关系"><a href="#4-Handler和Looper对应的关系" class="headerlink" title="4.Handler和Looper对应的关系"></a>4.Handler和Looper对应的关系</h1><p>​    从Hanlder的构造函数看出：一个Handler只能对应一个Looper，但是一个Looper可以对应多个Hanlder。</p>
+<h1 id="5-Messenger类"><a href="#5-Messenger类" class="headerlink" title="5.Messenger类"></a>5.Messenger类</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public Messenger(Handler target) &#123;</span><br><span class="line">    mTarget = target.getIMessenger();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Messenger类的构造函数数封装了一个Handler。这个类是handler类将自己封装后暴露给其他线程的，别的线程拿着这个Messenger就可以直接发送消息了。</p>
+<p>这个类在asyncchannel通信中有用到。</p>
+
+            </div>
+        
+        <footer class="article-footer">
+        </footer>
+    </div>
+</article>
+
+
+    
+<nav id="article-nav">
+    
+        <a href="/wiki/Android/驱动/Rk3399 Android音频驱动总结/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    RK3399 Android 音频驱动总结
+                
+            </div>
+        </a>
+    
+    
+        <a href="/wiki/首页/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">LIIHAG</div>
+        </a>
+    
+</nav>
+
+
+
+
+
+    
+    
+
+
+
+
+<!-- baidu url auto push script -->
+<script type="text/javascript">
+    !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=window.location.href,o=document.referrer;if(!e.test(r)){var n="//api.share.baidu.com/s.gif";o?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var t=new Image;t.src=n}}(window);
+</script>     
 </section>
         </div>
         <footer id="footer">
